@@ -1,0 +1,21 @@
+
+
+#tabsAndEditor {
+    width: var(--tabs-and-editor-width, 60%);
+    min-width: 200px;
+}
+
+resize-bar {
+    flex: 0 0 auto;
+}
+
+#map-preview {
+    height: unset;
+    min-width: 200px;
+    background-color: aqua;
+}
+
+.sidebar {
+    display: flex;
+    flex: 1;
+}
