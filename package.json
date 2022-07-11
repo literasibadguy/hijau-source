@@ -10,7 +10,7 @@
     "build": "echo \"This is not a TypeScript project, so no need to build.\"",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint '**/*.js'",
-    "lint:lit-analyzer": "lit-analyzer my-element.js",
+    "lint:lit-analyzer": "lit-analyzer 'src/**/*.js'",
     "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "docs": "npm run docs:clean && npm run analyze && npm run docs:build && npm run docs:assets && npm run docs:gen",
     "docs:clean": "rimraf docs",
@@ -39,7 +39,8 @@
   "author": "Google LLC",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "lit": "^2.2.4"
+    "lit": "^2.2.4",
+    "mapbox-gl": "^2.9.1"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",
@@ -55,6 +56,7 @@
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "eslint": "^8.15.0",
+    "geojson-flow": "^1.0.1",
     "lit-analyzer": "^1.2.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",

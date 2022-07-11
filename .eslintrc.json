@@ -7,7 +7,11 @@
   },
   "parserOptions": {
     "requireConfigFile": false,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "modules": true
+    }
   },
   "env": {
     "browser": true,
