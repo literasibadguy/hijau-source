@@ -4,7 +4,9 @@ class MapMaker extends LitElement {
 
     static get properties() {
         return {
-            _canSave: { type: Boolean, state: true }
+            _canSave: { type: Boolean, state: true },
+            _showMapLayerDesigner: { type: Boolean, state: true },
+            
         }
     }
 

@@ -1,6 +1,7 @@
 
 import { LitElement } from "lit";
 
+
 export default class BaseMapContainer extends LitElement {
     static get properties() {
         return {
@@ -13,8 +14,9 @@ export default class BaseMapContainer extends LitElement {
         super();
 
         this.baseMap = 'default';
-        // FILL THE MAPBOX ACCESS TOKEN;
         this.mapboxAccessToken = '';
     }
+
+
     
 }

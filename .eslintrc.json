@@ -18,6 +18,8 @@
     "mocha": true
   },
   "rules": {
+    // "flowtype/define-flow-type": 1,
+    // "flowtype/use-flow-type": 1,
     "no-unexpected-multiline": "off"
   },
   "overrides": [
