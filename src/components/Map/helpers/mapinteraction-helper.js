@@ -2,6 +2,14 @@ import { debounce } from "../../../utils/debounce";
 
 
 export default {
+    clickHandler(e) {
+        const map = this.mapBox;
+        if (!map) return;
+
+        console.log(e);
+
+    },
+
     mousemoveHandler(e) {
         const map = this.mapBox
         const _this = this;

@@ -39,6 +39,7 @@
   "author": "Google LLC",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@turf/distance": "^6.5.0",
     "lit": "^2.2.4",
     "mapbox-gl": "^2.9.1"
   },

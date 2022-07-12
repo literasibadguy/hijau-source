@@ -37,6 +37,10 @@ class BoxMap extends BaseMapContainer {
 
         // EVENTS
         this._mouseMoveHandler = this._mouseMoveHandler.bind(this);
+
+        // MapboxGL HELPER
+        this.getBounds = this.getBounds.bind(this);
+        this.getPosition = this.getPosition.bind(this);
     }
 
     connectedCallback() {
@@ -110,12 +114,16 @@ class BoxMap extends BaseMapContainer {
     }
 
     _moveEndHandler = () => {
-        
-        console.log('mouse up fired');
+        console.log('mouse up fired', this.getPosition());
+        this.updateMapPosition(this.getPosition());
+    }
+
+    getPosition = () => {
+        return MapboxGLHelper.getPosition.bind(this)();
     }
 
     getBounds = () => {
-        return MapboxGLHelper.getBounds.bind(this)()
+        return MapboxGLHelper.getBounds.bind(this)();
     }
 }
 
