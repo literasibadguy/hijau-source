@@ -6,7 +6,7 @@ export class CoordinatePanel extends LitElement {
     static get properties() {
         return {
             lot: { type: String, state: true },
-            lon: { type: String, state: true }
+            lon: { type: String, state: true },
         }
     }
 
@@ -37,7 +37,6 @@ export class CoordinatePanel extends LitElement {
     }
 
     submittedCordinate() {
-
         this.dispatchEvent('cord-submit', {bubbles: true, composed: true, detail: {lat: this.lat, lon: this.lon}});
     }
 

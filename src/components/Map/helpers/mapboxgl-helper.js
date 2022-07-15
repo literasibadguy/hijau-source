@@ -22,5 +22,18 @@ export default {
             lng: center.lng,
             lat: center.lat
         }
+    },
+
+    updatePosition() {
+        console.log('UPDATE POSITION', this.id);
+        const map = this.mapBox;
+        map.setView(this.mapBox.position.center, this.mapBox.position.zoom, {animate: false});
+    },
+
+    flyTo(center, zoom) {
+        if (!this.mapBox) {
+            return;
+        }
+        this.mapBox.flyTo({center, zoom});
     }
 }

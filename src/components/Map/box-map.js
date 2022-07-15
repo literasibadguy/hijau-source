@@ -18,7 +18,7 @@ class BoxMap extends BaseMapContainer {
                 dataEditorState: { type: Object },
                 mapState: { type: Object }
             },
-            _enableMeasurementTools: { type: Boolean, state: true }
+            enableMeasurementTools: { type: Boolean, state: true }
         }
     }
 
@@ -34,6 +34,8 @@ class BoxMap extends BaseMapContainer {
         this.containers = {baseMapState: {}, dataEditorState: {}, mapState: {}};
         this.showScale = true;
         this.navPosition = 'top-right';
+
+        this.enableMeasurementTools = false;
 
         // EVENTS
         this._mouseMoveHandler = this._mouseMoveHandler.bind(this);
