@@ -1,5 +1,6 @@
 import MapboxGLHelper from "./helpers/mapboxgl-helper";
 import MapInteractionHelper from "./helpers/mapinteraction-helper";
+import DrawHelper from "./helpers/draw-helper";
 import BaseMapContainer from "./containers/base-map-container";
 import  "mapbox-gl";
 
@@ -127,6 +128,13 @@ class BoxMap extends BaseMapContainer {
     getBounds = () => {
         return MapboxGLHelper.getBounds.bind(this)();
     }
+
+    // Draws Helper
+
+    toogleMeasurementTools = (enable) => {
+        return DrawHelper.toggleMeasurementTools.bind(this)(enable);
+    }
+    
 }
 
 customElements.define('box-map', BoxMap);
