@@ -1,10 +1,12 @@
 import MapboxGLHelper from "./helpers/mapboxgl-helper";
 import MapInteractionHelper from "./helpers/mapinteraction-helper";
 import DrawHelper from "./helpers/draw-helper";
+import DataEditorHelper from "./helpers/dataeditor-helper";
 import BaseMapContainer from "./containers/base-map-container";
 import  "mapbox-gl";
+import { html } from "lit";
 
-class BoxMap extends BaseMapContainer {
+export default class BoxMap extends BaseMapContainer {
     
     static get properties() {
         return {
@@ -58,11 +60,9 @@ class BoxMap extends BaseMapContainer {
         console.log('CHANGED PROPERTIES', changedProperties);
     }
 
-    update(changedProperties) {
+    updated(changedProperties) {
         console.log('CHANGED PROPERTIES', changedProperties);
-        if (this.mapBox.dragPan) {
-            this.mapBox.dragPan.enable();
-        }
+        
     }
 
 
@@ -121,6 +121,14 @@ class BoxMap extends BaseMapContainer {
         this.updateMapPosition(this.getPosition());
     }
 
+    // Data Editor Helper
+
+    getEditorStyles = () => {
+        return DataEditorHelper.getEditorStyles.bind(this)();
+    }
+
+    // MapboxGL Helper
+
     getPosition = () => {
         return MapboxGLHelper.getPosition.bind(this)();
     }
@@ -133,6 +141,12 @@ class BoxMap extends BaseMapContainer {
 
     toogleMeasurementTools = (enable) => {
         return DrawHelper.toggleMeasurementTools.bind(this)(enable);
+    }
+
+    render() {
+       return  html`
+            <slot></slot>
+        `;
     }
     
 }

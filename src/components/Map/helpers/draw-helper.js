@@ -1,5 +1,4 @@
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
-
+import "@mapbox/mapbox-gl-draw";
 
 export default {
     toggleMeasurementTools(enable) {
@@ -40,6 +39,7 @@ export default {
             return;
         }
 
+        // eslint-disable-next-line no-undef
         const draw = new MapboxDraw({displayControlsDefault: false});
 
         this.draw = draw;
