@@ -7,7 +7,6 @@ import  "mapbox-gl";
 import { html } from "lit";
 
 export default class BoxMap extends BaseMapContainer {
-    
     static get properties() {
         return {
             className: {type: String},

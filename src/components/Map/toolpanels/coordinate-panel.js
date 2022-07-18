@@ -36,22 +36,30 @@ export class CoordinatePanel extends LitElement {
         this.lon = e.target.value;
     }
 
-    submittedCordinate() {
-        this.dispatchEvent('cord-submit', {bubbles: true, composed: true, detail: {lat: this.lat, lon: this.lon}});
+    submittedCordinate(e) {
+        e.preventDefault();
+
+        this.dispatchEvent(new CustomEvent('cord-submit', {bubbles: true, composed: true, detail: {lat: this.lat, lon: this.lon}}));
     }
 
     render() {
         return html`
             <div class="row-coordinates">
                 <form>
-                <input type="text" placeholder="Latitude" @change=${this.changeLatitude}
-                />
-                <input type="text" placeholder="Longitude" @change=${this.changeLongitude} />
-                <button id="cord-button" @submit=${this.submittedCordinate}></button>
+                    <input type="text" placeholder="Latitude" @change=${this.changeLatitude}
+                    />
+                    <input type="text" placeholder="Longitude" @change=${this.changeLongitude} />
+                    <button id="cord-button"  @click=${this.submittedCordinate}></button>
                 </form>
             </div>
         `
     }
+
+    createRenderRoot() {
+        // Disable shadow DOM.
+        // Instead templates will be rendered in the light DOM.
+        return this;
+      }
 }
 
 customElements.define('coordinate-panel', CoordinatePanel);

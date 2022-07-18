@@ -7,22 +7,41 @@
     <title>Drawing Demo</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script src="../node_modules/unistore/dist/unistore.umd.js"></script>
 
     <script type="module" src="../src/components/navigation-drawer.js"></script>
 
+    <link rel="stylesheet" href="navigation.css" />
+
     <style>
 
+      main {
+        flex: auto;
+      }
+
+      #base-view {
+        display: flex;
+      }
+
+      #inner-base {
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
     <main>
-        <navigation-drawer>
+        <navigation-drawer type="modal">
             <nav data-drawer-container id="sample-container">
                 <div class="add__title">
                     <span>TEST TING</span>
                 </div>
             </nav>
         </navigation-drawer>
+        <div id="base-view">
+          <div id="inner-base">
+            <h2>BASES VIEW</h2>
+          </div>
+        </div>
     </main>
   </body>
 </html>

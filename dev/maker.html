@@ -7,8 +7,11 @@
     <title>Maker Map</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script src="../node_modules/unistore/dist/unistore.umd.js"></script>
 
     <script type="module" src="../src/components/tabs.js"></script>
+    <script type="module" src="../src/components/MapMaker/map-maker.js"></script>
+    <script type="module" src="../src/components/Map/toolpanels/coordinate-panel.js"></script>
 
     <link rel="stylesheet" href="../node_modules/mapbox-gl/dist/mapbox-gl.css" />
 
@@ -47,11 +50,13 @@
                     </div>
                     <div id="edit-layers" title="Edit Layers" data-label="Edit Layers">
                         <h2>Edit Layers</h2>
+                        <coordinate-panel></coordinate-panel>
                     </div>
                 </hijau-tabs>
             </div>
             <div id="map-make-container">
-
+                <map-maker>
+                </map-maker>
             </div>
         </div>
     </main>

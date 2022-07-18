@@ -1,0 +1,44 @@
+
+navigation-drawer {
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 300;
+
+
+}
+
+navigation-drawer > nav[data-drawer-container] {
+    position: relative;
+    transform: translateX(-110%);
+    width: var(--web-navigation-drawer-width, 22rem);
+    background-color: white;
+}
+
+navigation-drawer::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0 0 0 / 40%);
+    opacity: 0;
+}
+
+navigation-drawer[open] {
+    pointer-events: auto;
+    visibility: visible;
+}
+
+navigation-drawer[open]::before {
+    opacity: 1;
+}
+
+navigation-drawer[open] > nav[data-drawer-container] {
+    transform: none;
+}
