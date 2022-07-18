@@ -13,14 +13,18 @@ export default class BoxMap extends BaseMapContainer {
             className: {type: String},
             stateId: { type: String },
             data: { type: Object },
+            glStyle: { type: Object },
             showScale: { type: Boolean },
             navPosition: { type: String },
             interactionBufferSize: { type: Number },
+            fitBounds: { type: Array },
+            fitBoundsOptions: { type: Object },
             containers: {
                 baseMapState: { type: Object },
                 dataEditorState: { type: Object },
                 mapState: { type: Object }
             },
+            mapLoaded: { type: Boolean, state: true },
             enableMeasurementTools: { type: Boolean, state: true }
         }
     }
@@ -38,6 +42,7 @@ export default class BoxMap extends BaseMapContainer {
         this.showScale = true;
         this.navPosition = 'top-right';
 
+        this.mapLoaded = false;
         this.enableMeasurementTools = false;
 
         // EVENTS
@@ -56,6 +61,13 @@ export default class BoxMap extends BaseMapContainer {
         this.loadMap();
     }
 
+    disconnectedCallback() {
+        if (this.mapBox) {
+            this.mapBox.remove();
+        }
+        super.disconnectedCallback();
+    }
+
     willUpdate(changedProperties) {
         console.log('CHANGED PROPERTIES', changedProperties);
     }
@@ -69,6 +81,7 @@ export default class BoxMap extends BaseMapContainer {
     loadMap() {
         // eslint-disable-next-line no-undef
         mapboxgl.accessToken = this.mapboxAccessToken;
+        const { data, mapLoaded, fitBounds, fitBoundsOptions } = this;
 
         // eslint-disable-next-line no-undef
         const mapBox = new mapboxgl.Map({
@@ -95,6 +108,17 @@ export default class BoxMap extends BaseMapContainer {
             }, 5000);
         });
 
+        mapBox.on('style.load', () => {
+            if (!data && !mapLoaded && fitBounds) {
+                let bounds = fitBounds;
+                if (bounds.length > 2) {
+                    bounds = [[fitBounds[0], fitBounds[1]], [fitBounds[2], fitBounds[3]]]
+                }
+                console.log(`fitting map to bounds: ${bounds.toString()}`)
+                mapBox.fitBounds(fitBounds, fitBoundsOptions);
+            }
+        })
+
 
         if (this.interactive) {
             // eslint-disable-next-line no-undef
@@ -103,6 +127,9 @@ export default class BoxMap extends BaseMapContainer {
 
         this.mapBox = mapBox;
         console.log("IS IT INITIALIZED", this.mapBox);
+
+        this.mapLoaded = true;
+        console.log("MAP LOADED", this.mapLoaded);
 
         this.mapBox.on('mousemove', this._mouseMoveHandler)
         this.mapBox.on('moveend', this._moveEndHandler)
