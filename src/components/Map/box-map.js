@@ -6,6 +6,8 @@ import BaseMapContainer from "./containers/base-map-container";
 import  "mapbox-gl";
 import { html } from "lit";
 
+
+
 export default class BoxMap extends BaseMapContainer {
     static get properties() {
         return {
@@ -23,6 +25,7 @@ export default class BoxMap extends BaseMapContainer {
                 dataEditorState: { type: Object },
                 mapState: { type: Object }
             },
+            showMapTools: { type: Boolean },
             mapLoaded: { type: Boolean, state: true },
             enableMeasurementTools: { type: Boolean, state: true }
         }
@@ -40,9 +43,10 @@ export default class BoxMap extends BaseMapContainer {
         this.containers = {baseMapState: {}, dataEditorState: {}, mapState: {}};
         this.showScale = true;
         this.navPosition = 'top-right';
+        this.showMapTools = true;
 
         this.mapLoaded = false;
-        this.enableMeasurementTools = false;
+        this.enableMeasurementTools = true;
 
         // EVENTS
         this._mouseMoveHandler = this._mouseMoveHandler.bind(this);
@@ -116,6 +120,8 @@ export default class BoxMap extends BaseMapContainer {
                 console.log(`fitting map to bounds: ${bounds.toString()}`)
                 mapBox.fitBounds(fitBounds, fitBoundsOptions);
             }
+
+            this.dispatchEvent(new CustomEvent('map-onload', {bubbles: true, composed: true, detail: { onload: true }}));
         })
 
 
@@ -170,9 +176,28 @@ export default class BoxMap extends BaseMapContainer {
     }
 
     render() {
+
+
        return  html`
-            <slot></slot>
+            <div>
+            ${this.showMapTools ? html`
+                <div id="map-tool-panel">
+                    <div id="map-tool-button">
+                    </div>
+                </div>
+            ` : ``}
+            ${this.enableMeasurementTools ? html`
+                <div id="measurement-tools">
+                    <span>Measurement Message</span>
+                </div>
+            ` : ``}
+            ${this.mapLoaded && html`<slot></slot>`}
+            </div>
         `;
+    }
+
+    createRenderRoot() {
+        return this;
     }
     
 }

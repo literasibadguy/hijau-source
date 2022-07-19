@@ -29,6 +29,7 @@ export class SwitchToggle extends LitElement {
             position: absolute;
             background-color: gray;
             width: 3rem;
+            
             height: 1.5rem;
             box-sizing: border-box;
             border-radius: 1rem;

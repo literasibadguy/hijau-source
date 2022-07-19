@@ -1,6 +1,9 @@
 import { startEditing } from "../../libs/editor-actions";
 import { DataEditorContainer } from "../Map/containers/data-editor-container";
 
+import '../Map/box-map';
+import { html } from "lit";
+
 export class MapMaker extends DataEditorContainer {
 
     static get properties() {
@@ -34,7 +37,7 @@ export class MapMaker extends DataEditorContainer {
         super.connectedCallback();
 
         this.coordinatePanel = this.getRootNode().documentElement.querySelector('coordinate-panel');
-
+        
         this.coordinatePanel.addEventListener('cord-submit', this.listenCoordinatePanel);
     }
     
@@ -52,6 +55,36 @@ export class MapMaker extends DataEditorContainer {
         startEditing();
         this.startEditing(layer);
     }
+
+    _initEditLayer(e) {
+        console.log('MAP IS LOADED ITS TIME TO LOADED', e);
+    }
+
+    addLayer(layer) {
+        layer = JSON.parse(JSON.stringify(layer));
+        if (find(this.mapLayers, {layer_id: layer.layer_id})) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    render() {
+        const { _initEditLayer: initEditLayer } = this;
+
+        return html`
+            <div>
+                <box-map
+                    id='map-interactive'
+                    stateId='mapbox-container'
+                    @map-onload=${initEditLayer}
+                >
+                    <h4>Tool Panels</h4>
+                    <!-- <layer-list-item></layer-list-item> -->
+                </box-map>
+            </div>
+        `
+    }  
 
     createRenderRoot() {
         return this;
