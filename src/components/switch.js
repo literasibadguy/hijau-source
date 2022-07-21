@@ -1,13 +1,13 @@
 import { css, html, LitElement } from "lit";
 
-export class SwitchToggle extends LitElement {
+export default class SwitchToggle extends LitElement {
 
     static styles = css`
 
         .switch--input {
             width: 1px;
             height: 1px;
-
+            display: none ;
         }
 
         .switch---input__label {

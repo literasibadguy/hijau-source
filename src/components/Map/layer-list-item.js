@@ -1,7 +1,14 @@
 import { html, LitElement, css } from "lit";
 
+import '../switch';
 
 export default class LayerListItem extends LitElement {
+
+    static get properties() {
+        return {
+            itemLayer: { type: Object }
+        }
+    }
 
     static styles = css`
         .layer-list-item {
@@ -14,14 +21,47 @@ export default class LayerListItem extends LitElement {
         }
     `;
 
+    constructor() {
+        super();
+
+        this.itemLayer = {};
+    }
+
+    editLayer() {
+
+        this.dispatchEvent(new CustomEvent('need-edit-layer', {
+            bubbles: true,
+            composed: true,
+            detail: { editItem: this.itemLayer }
+        }))
+    }
+
+    toggleVisibility() {
+        this.dispatchEvent(new CustomEvent('need-visible', {
+            bubbles: true,
+            composed: true,
+            detail: { editItem: this.itemLayer }
+        }))
+    }
 
     render() {
         return html`
-            <div class="layer-list-item">
-                <h2>Layer Name</h2>
-                <p>Layer Source</p>
+            <div>
+                <h3>Layer Name</h3>
+                <p>Layer Source: ${this.itemLayer.source}</p>
+                <div class="cluster">
+                    <button @click=${this.editLayer}>Edit</button>
+                    <switch-toggle
+                     name="Visibility"
+                      value="visible"
+                       @switch-change=${this.toggleVisibility}></switch-toggle>
+                </div>
             </div>
         `
+    }
+
+    createRenderRoot() {
+        return this;
     }
 }
 

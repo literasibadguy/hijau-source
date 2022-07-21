@@ -6,7 +6,7 @@ import BaseMapContainer from "./containers/base-map-container";
 import  "mapbox-gl";
 import { html } from "lit";
 
-
+import './map-tool-panel';
 
 export default class BoxMap extends BaseMapContainer {
     static get properties() {
@@ -54,6 +54,9 @@ export default class BoxMap extends BaseMapContainer {
         // MapboxGL HELPER
         this.getBounds = this.getBounds.bind(this);
         this.getPosition = this.getPosition.bind(this);
+
+        // DataEditor HELPER
+        this.startEditingTool = this.startEditingTool.bind(this);
     }
 
     connectedCallback() {
@@ -90,13 +93,13 @@ export default class BoxMap extends BaseMapContainer {
         const mapBox = new mapboxgl.Map({
             container: this.stateId,
             style: 'mapbox://styles/mapbox/satellite-v9',
-            zoom: 0,
+            zoom: 4,
             interactive: this.interactive,
             minZoom: 0,
             maxZoom: 22,
             touchZoomRotate: true,
             touchPitch: false,
-            center: [0, 0],
+            center: [-88.137343, 35.137451],
         });
 
         mapBox.on('error', (err) => {
@@ -104,11 +107,52 @@ export default class BoxMap extends BaseMapContainer {
         })
 
 
+        let sampleLayer;
+
         mapBox.on('load', () => {
             console.log('MAP LOADED');
             setTimeout(() => {
                 this.getRootNode().documentElement.querySelector('body').append('<div id="map-load-complete" style="display: none;"></div>');
             }, 5000);
+
+            const layers = mapBox.getStyle().layers;
+                // Find the index of the first symbol layer in the map style.
+                let firstSymbolId;
+                for (const layer of layers) {
+                    if (layer.type === 'symbol') {
+                        firstSymbolId = layer.id;
+                        break;
+                    }
+                }
+
+            // SAMPLE SOURCE
+            mapBox.addSource('urban-areas', {
+                'type': 'geojson',
+                'data': 'https://docs.mapbox.com/mapbox-gl-js/assets/ne_50m_urban_areas.geojson'
+                });
+
+            sampleLayer = {
+                'id': 'urban-areas-fill',
+                'type': 'fill',
+                'source': 'urban-areas',
+                'layout': {},
+                'paint': {
+                'fill-color': '#f08',
+                'fill-opacity': 0.4
+                },
+                // This is the important part of this example: the addLayer
+                // method takes 2 arguments: the layer as an object, and a string
+                // representing another layer's name. If the other layer
+                // exists in the style already, the new layer will be positioned
+                // right before that layer in the stack, making it possible to put
+                // 'overlays' anywhere in the layer stack.
+                // Insert the layer beneath the first symbol layer.
+                    firstSymbolId
+                },
+            
+            mapBox.addLayer(sampleLayer);
+
+            this.startEditingTool(sampleLayer);
         });
 
         mapBox.on('style.load', () => {
@@ -120,8 +164,6 @@ export default class BoxMap extends BaseMapContainer {
                 console.log(`fitting map to bounds: ${bounds.toString()}`)
                 mapBox.fitBounds(fitBounds, fitBoundsOptions);
             }
-
-            this.dispatchEvent(new CustomEvent('map-onload', {bubbles: true, composed: true, detail: { onload: true }}));
         })
 
 
@@ -159,6 +201,10 @@ export default class BoxMap extends BaseMapContainer {
         return DataEditorHelper.getEditorStyles.bind(this)();
     }
 
+    startEditingTool = (layer) => {
+        return DataEditorHelper.startEditingTool.bind(this)(layer);
+    }
+
     // MapboxGL Helper
 
     getPosition = () => {
@@ -181,10 +227,8 @@ export default class BoxMap extends BaseMapContainer {
        return  html`
             <div>
             ${this.showMapTools ? html`
-                <div id="map-tool-panel">
-                    <div id="map-tool-button">
-                    </div>
-                </div>
+                <map-tool-panel>
+                    </map-tool-panel>
             ` : ``}
             ${this.enableMeasurementTools ? html`
                 <div id="measurement-tools">

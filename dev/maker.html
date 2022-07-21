@@ -11,12 +11,16 @@
 
     <script type="module" src="../src/components/tabs.js"></script>
     <script type="module" src="../src/components/MapMaker/map-maker.js"></script>
+    <script type="module" src="../src/components/Map/layer-list.js"></script>
     <script type="module" src="../src/components/Map/toolpanels/coordinate-panel.js"></script>
+
 
     <link rel="stylesheet" href="../node_modules/mapbox-gl/dist/mapbox-gl.css" />
 
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/sidebar.css" />
+    <link rel="stylesheet" href="styles/cluster.css" />
+    <link rel="stylesheet" href="styles/navigation-drawer.css" />
     <link rel="stylesheet" href="maker.css" />
     <link rel="stylesheet" href="tabs.css" />
 
@@ -51,6 +55,7 @@
                     </div>
                     <div id="list-layers" title="List Layers" data-label="List Layers">
                         <h2>List Layers</h2>
+                        <layer-list></layer-list>
                     </div>
                     <div id="edit-layers" title="Edit Layers" data-label="Edit Layers">
                         <h2>Edit Layers</h2>

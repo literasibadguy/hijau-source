@@ -44,7 +44,8 @@
     "@turf/distance": "^6.5.0",
     "lit": "^2.2.4",
     "mapbox-gl": "^2.9.1",
-    "unistore": "^3.5.2"
+    "unistore": "^3.5.2",
+    "wicg-inert": "^3.1.2"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",

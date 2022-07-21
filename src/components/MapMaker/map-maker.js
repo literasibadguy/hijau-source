@@ -70,18 +70,9 @@ export class MapMaker extends DataEditorContainer {
     }
 
     render() {
-        const { _initEditLayer: initEditLayer } = this;
-
+            
         return html`
             <div>
-                <box-map
-                    id='map-interactive'
-                    stateId='mapbox-container'
-                    @map-onload=${initEditLayer}
-                >
-                    <h4>Tool Panels</h4>
-                    <!-- <layer-list-item></layer-list-item> -->
-                </box-map>
             </div>
         `
     }  
@@ -90,5 +81,19 @@ export class MapMaker extends DataEditorContainer {
         return this;
     }
 }
+
+/*
+
+DISCONNECTED FROM THE INTERNET
+
+                <!-- <box-map
+                    id='map-interactive'
+                    stateId='mapbox-container'
+                    @map-onload=${initEditLayer}
+                >
+                    <h4>Tool Panels</h4>
+                    <!-- <layer-list-item></layer-list-item> -->
+                </box-map>
+*/
 
 customElements.define('map-maker', MapMaker);
