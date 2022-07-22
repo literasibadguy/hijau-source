@@ -73,6 +73,14 @@ export class MapMaker extends DataEditorContainer {
             
         return html`
             <div>
+                 <box-map
+                    id='map-interactive'
+                    stateId='mapbox-container'
+                    @map-onload=${this._initEditLayer}
+                >
+                    <h4>Tool Panels</h4>
+                    <!-- <layer-list-item></layer-list-item> -->
+                    </box-map>
             </div>
         `
     }  

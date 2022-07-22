@@ -1,6 +1,7 @@
 
 import "@mapbox/mapbox-gl-draw";
 import theme from "@mapbox/mapbox-gl-draw/src/lib/theme";
+import { startEditing } from "../../../libs/dataeditor-actions";
 
 export default {
 
@@ -17,7 +18,7 @@ export default {
 
         // eslint-disable-next-line no-undef
         const draw = new MapboxDraw({
-            displayControlsDefault: false,
+            // displayControlsDefault: false,
             controls: {
                 point: layer.type === 'point',
                 polygon: layer.type === 'fill',
@@ -35,15 +36,24 @@ export default {
             const features = e.features;
             if (features && features.length > 0) {
                 features.forEach(feature => {
-                    // ADD CREATE FEATURE
                     console.log(feature);
+                    startEditing(feature);
                 })
             }
         })
 
-        this.map.on('draw.update', e => {
-            console.log('draw update')
-            this.updateEdits(e)
+        this.mapBox.on('draw.update', e => {
+            console.log('draw update', e);
+            // this.updateEdits(e)
+        })
+
+        this.mapBox.on('draw.delete', e => {
+            console.log('draw delete', e);
+            
+        })
+
+        this.mapBox.on('draw.selectionchange', async (e) => {
+            console.log('draw selection', e);
         })
 
         

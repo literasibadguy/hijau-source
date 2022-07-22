@@ -25,12 +25,20 @@
     <link rel="stylesheet" href="tabs.css" />
 
     <style>
+
+        #header__maker {
+            position: sticky;
+            height: 50px;
+            background-color: burlywood;
+        }
+
         main {
             flex: auto;
+            min-height: calc(100vh - 50px);
         }
 
         #map-maker {
-            min-height: 800px;
+            min-height: calc(100vh - 50px);
             --gutter: 0;
         }
 
@@ -46,6 +54,9 @@
     </style>
   </head>
   <body>
+    <header id="header__maker">
+        
+    </header>
     <main>
         <div id="map-maker" class="sidebar">
             <div id="map-panel">
