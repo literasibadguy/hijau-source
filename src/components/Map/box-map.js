@@ -194,6 +194,7 @@ export default class BoxMap extends BaseMapContainer {
 
         this.mapBox.on('mousemove', this._mouseMoveHandler)
         this.mapBox.on('moveend', this._moveEndHandler)
+        this.mapBox.on('click', this._clickHandler)
     }
 
 
@@ -208,6 +209,13 @@ export default class BoxMap extends BaseMapContainer {
     _moveEndHandler = () => {
         console.log('mouse up fired', this.getPosition());
         this.updateMapPosition(this.getPosition());
+    }
+
+    _clickHandler = (e) => {
+        if (!this.mapBox) {
+            return;
+        }
+        return MapInteractionHelper.clickHandler.bind(this)(e);
     }
 
     // Geo JSON Helper
