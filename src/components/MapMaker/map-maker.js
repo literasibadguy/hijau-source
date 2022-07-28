@@ -54,10 +54,12 @@ export class MapMaker extends DataEditorContainer {
     editLayer(layer) {
         startEditing();
         this.startEditing(layer);
+        console.log('Editing Layer', layer);
     }
 
     _initEditLayer(e) {
         console.log('MAP IS LOADED ITS TIME TO LOADED', e);
+        this.editLayer(e.detail.layer);
     }
 
     addLayer(layer) {

@@ -8,6 +8,12 @@ export default {
 
         console.log(e);
 
+        if (!this.enableMeasurementTools) {
+            if (!this.selected && this.selectedFeature) {
+                this.selected = true;
+            } 
+        }
+
     },
 
     mousemoveHandler(e) {
@@ -16,7 +22,6 @@ export default {
         if (!map) return;
 
         if (!this._enableMeasurementTools) {
-            console.log('NO MEASURE MENT');
             const debounced = debounce(() => {
                 if (_this.mapLoaded && _this.restoreBounds) {
                     this.restoreBounds = undefined;

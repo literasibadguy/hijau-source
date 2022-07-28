@@ -2,7 +2,7 @@
 
 import { dataEditorStore } from "./dataeditor-store";
 
-export const startEditing = 
+export const createFeature = 
     dataEditorStore.action((state, feature) => {
         // const edits = JSON.parse(state.getState().edits);
         const created = {
@@ -30,8 +30,63 @@ export const updateFeatures = dataEditorStore.action((state, features) => {
         if (state.getState().selectedEditFeature) {
             state.setState({selectedEditFeature: edit})
         }
-
-        
-
     })
 })
+
+/**
+ * 
+ * @param {string} id 
+ * @param {any} edits 
+ */
+function getLastEditForID(id, edits) {
+    const matchingEdits = [];
+    edits.forEach(edit => {
+        if (edit.geojson.id === id) {
+            matchingEdits.push(edit);
+        }
+    });
+    if (matchingEdits.length > 0) {
+        return JSON.parse(JSON.stringify(matchingEdits[0]))
+    } else {
+        let original
+        dataEditorStore.getState().originals.foreach(orig => {
+            if (orig.geojson.id === id) {
+                original = orig
+            }
+        })
+        if (original) {
+            return JSON.parse(JSON.stringify(original))
+        }
+        return null;
+    }
+} 
+
+
+export const selectFeature = dataEditorStore.action((state, mhid) => {
+    const selected = getLastEditForID(mhid, state.getState().edits);
+
+    if (selected) {
+        state.setState({selectedEditFeature: selected})
+        return selected.geojson;
+    } else {
+        const id = mhid.split(':')[1]
+        const layer_id = (state.editingLayer && state.editingLayer.layer_id) ? state.editingLayer.layer_id : 0
+
+       console.log("id: ", id);
+       console.log("layer id: %d", layer_id);
+    }
+})
+
+export const deleteFeature = dataEditorStore.action((state, feature) => {
+    console.log(feature);
+
+    const edit = {
+        status: 'delete',
+        geojson: JSON.parse(JSON.stringify(feature))
+    }
+
+    const edits = JSON.parse(JSON.stringify(state.getState().edits))
+    edits.push(edit)
+    state.setState({ edits, redo: [] })
+})
+

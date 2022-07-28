@@ -2,6 +2,7 @@ import MapboxGLHelper from "./helpers/mapboxgl-helper";
 import MapInteractionHelper from "./helpers/mapinteraction-helper";
 import DrawHelper from "./helpers/draw-helper";
 import DataEditorHelper from "./helpers/dataeditor-helper";
+import MapGeoJSONHelper from "./helpers/geojson-helper";
 import BaseMapContainer from "./containers/base-map-container";
 import  "mapbox-gl";
 import { html } from "lit";
@@ -26,6 +27,8 @@ export default class BoxMap extends BaseMapContainer {
                 mapState: { type: Object }
             },
             showMapTools: { type: Boolean },
+            selectedFeature: { type: Object, state: true },
+            selected: { type: Boolean, state: true },
             mapLoaded: { type: Boolean, state: true },
             enableMeasurementTools: { type: Boolean, state: true }
         }
@@ -46,10 +49,15 @@ export default class BoxMap extends BaseMapContainer {
         this.showMapTools = true;
 
         this.mapLoaded = false;
-        this.enableMeasurementTools = true;
+        this.selected = false;
+        this.selectedFeature = null;
+        this.enableMeasurementTools = false;
 
         // EVENTS
         this._mouseMoveHandler = this._mouseMoveHandler.bind(this);
+
+        // GeoJSON HELPER
+        this.initGeoJSON = this.initGeoJSON.bind(this);
 
         // MapboxGL HELPER
         this.getBounds = this.getBounds.bind(this);
@@ -76,6 +84,10 @@ export default class BoxMap extends BaseMapContainer {
 
     willUpdate(changedProperties) {
         console.log('CHANGED PROPERTIES', changedProperties);
+
+        if (changedProperties.has('data')) {
+            this.initGeoJSON(this.data);
+        }
     }
 
     updated(changedProperties) {
@@ -152,6 +164,8 @@ export default class BoxMap extends BaseMapContainer {
             
             mapBox.addLayer(sampleLayer);
 
+            this.dispatchEvent(new CustomEvent('map-onload', {detail: { layer: sampleLayer }, composed:  true, bubbles: true }))
+
             this.startEditingTool(sampleLayer);
         });
 
@@ -182,6 +196,7 @@ export default class BoxMap extends BaseMapContainer {
         this.mapBox.on('moveend', this._moveEndHandler)
     }
 
+
     _mouseMoveHandler(e) {
         e.preventDefault();
         if (!this.mapBox) {
@@ -195,6 +210,12 @@ export default class BoxMap extends BaseMapContainer {
         this.updateMapPosition(this.getPosition());
     }
 
+    // Geo JSON Helper
+
+    initGeoJSON = (data) => {
+        return MapGeoJSONHelper.initGeoJSON.bind(this)(data);
+    }
+
     // Data Editor Helper
 
     getEditorStyles = () => {
@@ -203,6 +224,10 @@ export default class BoxMap extends BaseMapContainer {
 
     startEditingTool = (layer) => {
         return DataEditorHelper.startEditingTool.bind(this)(layer);
+    }
+
+    updateEdits = (e) => {
+        return DataEditorHelper.updateEdits.bind(this)(e);
     }
 
     // MapboxGL Helper
@@ -222,8 +247,6 @@ export default class BoxMap extends BaseMapContainer {
     }
 
     render() {
-
-
        return  html`
             <div>
             ${this.showMapTools ? html`

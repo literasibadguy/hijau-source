@@ -1,5 +1,12 @@
 import { viewStore } from "./view-store";
 
+/*
+{
+  "zoom": 10.409251868659018,
+  "lng": -87.15315738996628,
+  "lat": 40.71141420575941
+}
+*/
 
 export const disablePage = () => {
     const main = document.querySelector('main') || {};
