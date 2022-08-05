@@ -2,6 +2,11 @@
 
 import { dataEditorStore } from "./dataeditor-store";
 
+
+export const startEditing = dataEditorStore.action((state, layer) => {
+    state.setState({ editing: true, editingLayer: layer });
+})
+
 export const createFeature = 
     dataEditorStore.action((state, feature) => {
         // const edits = JSON.parse(state.getState().edits);

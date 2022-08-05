@@ -2,7 +2,7 @@ import createStore from 'unistore'
 import devtools from 'unistore';
 
 const initialDataEditorState = {
-    editing: false,
+    editing: true,
     editingLayer: {},
     originals: [],
     edits: [],

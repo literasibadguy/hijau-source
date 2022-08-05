@@ -1,0 +1,82 @@
+
+#panels-container {
+    padding: 1rem;
+}
+
+
+.form-coordinates {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.form-coordinates * + * {
+    margin-top: 1rem;
+}
+
+#toggles-container * {
+    margin-top: 1rem;
+}
+
+.accent-button {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+    font-size: 14px;
+}
+
+.coord-input {
+    padding: 0.6rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    font-size: 16px;
+}
+
+#cord-button {
+    height: 32px;
+    border: 1px solid black;
+    border-radius: 1rem;
+}
+
+.hijau--number {
+    display: flex;
+    flex-direction: row;
+}
+
+.hijau-number-input {
+    padding: 1rem;
+    font-size: 18px;
+    border-radius: 0.8rem;
+    border: 1px solid black;
+    margin-right: 0.8rem;
+}
+
+/* .hijau-number-input[data-invalid] { */
+    /* border: 1px solid red; */
+/* } */
+
+.hijau-number-input::before {
+    background-color: blue;
+}
+
+.hijau-number-input:focus {
+    border: 0;
+}
+
+.hijau--number__control-btn {
+    background: transparent;
+    border: 0;
+    min-width: 32px;
+}
+
+
+
+/* .hijau--number-input--invalid {
+    border: 1px solid red;
+} */
+
+.hijau--number__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

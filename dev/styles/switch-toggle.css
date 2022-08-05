@@ -1,0 +1,70 @@
+
+        .switch--input {
+            width: 1px;
+            height: 1px;
+            display: none ;
+        }
+
+        .switch---input__label {
+            display: flex;
+            flex-direction:column ;
+            align-items: center ;
+        }
+
+        .toggle__switch {
+            position: relative;
+            display: flex;
+            width: 3rem;
+            height: 1.5rem;
+            cursor: pointer;
+            align-items: center
+        }
+
+        .toggle__switch::before {
+            position: absolute;
+            background-color: gray;
+            width: 3rem;
+            height: 1.5rem;
+            box-sizing: border-box;
+            border-radius: 1rem;
+            content: "";
+            will-change: box-shadow;
+         }
+
+         .switch--input:checked + .switch---input__label > .toggle__switch::before {
+            background-color: green;
+        }
+
+         .toggle__switch::after {
+            position: absolute;
+            left: 2px;
+            display: block;
+            width: 1.125rem;
+            height: 1.125rem;
+            box-sizing: border-box;
+            border-radius: 50%;
+            content: "";
+            transition: transform 70ms cubic-bezier(0.2, 0, 1, 0.9) 0s, transform 70ms cubic-bezier(0.2, 0, 1, 0.9) 0s ;
+            background-color: black;
+         }
+
+         .switch--input:checked + .switch---input__label > .toggle__switch::after {
+            transform: translateX(1.5rem) ;
+        }
+
+         .switch__text--off, .switch__text--on {
+            position: absolute;
+            margin-left: 3.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            user-select: none;
+            white-space: nowrap;
+         }
+
+         .switch--input:checked + .switch---input__label > .toggle__switch > .switch__text--off {
+            visibility: hidden;
+        }
+
+        .switch--input:not(:checked) + .switch---input__label > .toggle__switch > .switch__text--on {
+            visibility: hidden;
+        }

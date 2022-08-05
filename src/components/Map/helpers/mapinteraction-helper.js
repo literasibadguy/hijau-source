@@ -1,5 +1,6 @@
+import { dataEditorStore } from "../../../libs/dataeditor-store";
 import { debounce } from "../../../utils/debounce";
-
+import MapStyles from "../styles";
 
 export default {
     clearSelection() {
@@ -32,9 +33,38 @@ export default {
 
                     const feature = features[0];
                     if (feature.layer && feature.layer.source) {
-                        console.log('Feature layer');
+                        console.log('Feature layer', feature);
+                        let presets = MapStyles.settings.getSourceSetting(this.mapBox.getStyle(), feature.layer.source, 'presets');
+                        console.log('PRESETS', presets);
+                        if (!presets) {
+                            console.log(`presets not found in source ${feature.layer.source}`)
+                            const source = this.glStyle.sources[feature.layer.source]
+                            let data
+                            if (source) {
+                                data = source.data
+                            }
+                            if (data) {
+                                if (data.metadata) {
+                                    presets = data.metadata['hijau:presets']
+                                    if (presets) {
+                                        console.log('Presets FOUND for source');
+                                    } else {
+                                        console.loog('Presets not found in data.metadata');
+                                    }
+                                }
+                            } else {
+                                console.log(`data not found in source ${feature.layer.source}`);
+                            }
+                        }
+                        console.log('SELECTED FEATURE', feature);
+                    }
+
+                    if (dataEditorStore.getState().getState().editing) {
+                        this.editFeature(feature);
                     }
                 }
+                
+                
             }
         }
 

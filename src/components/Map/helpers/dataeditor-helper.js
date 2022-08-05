@@ -9,6 +9,14 @@ export default {
         return theme;
     },
 
+    /**
+     * 
+     * @param {Object} editFeature 
+     */
+    async editFeature(editFeature) {
+        console.log('DATA EDIT FEATURE', editFeature);
+    },
+
     startEditingTool(layer) {
 
         if (this.enableMeasurementTools) {

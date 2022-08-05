@@ -138,6 +138,10 @@ export default class SwitchToggle extends LitElement {
             </label>
         `
     }
+
+    createRenderRoot() {
+        return this;
+    }
 }
 
 customElements.define('switch-toggle', SwitchToggle);

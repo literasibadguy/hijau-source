@@ -47,6 +47,7 @@ export default class BoxMap extends BaseMapContainer {
         this.showScale = true;
         this.navPosition = 'top-right';
         this.showMapTools = true;
+        this.glStyle = {};
 
         this.mapLoaded = false;
         this.selected = false;
@@ -230,12 +231,31 @@ export default class BoxMap extends BaseMapContainer {
         return DataEditorHelper.getEditorStyles.bind(this)();
     }
 
+    /**
+     * 
+     * @param {Layer} layer 
+     * @returns 
+     */
     startEditingTool = (layer) => {
         return DataEditorHelper.startEditingTool.bind(this)(layer);
     }
 
+    /**
+     * 
+     * @param {any} e 
+     * @returns 
+     */
     updateEdits = (e) => {
         return DataEditorHelper.updateEdits.bind(this)(e);
+    }
+
+    /**
+     * 
+     * @param {Object} feature 
+     * @returns 
+     */
+    editFeature = (feature) => {
+        return DataEditorHelper.editFeature.bind(this)(feature);
     }
 
     // MapboxGL Helper

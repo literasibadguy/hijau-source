@@ -1,0 +1,5 @@
+.region {
+    padding-top: var(--region-space, clamp(3.75rem, 3.21rem + 2.68vw, 5.625rem));
+    padding-bottom: var(--region-space, clamp(3.75rem, 3.21rem + 2.68vw, 5.625rem));
+  }
+  

@@ -42,9 +42,13 @@ export class MeasurementPanel extends LitElement {
                 <h2>Show Measurement Tools</h2>
                 <input type="checkbox" id="scales" name="scales"
              checked @change=${this.toggleMeasurementTools} @input=${this.checkboxClicked}>
-                <input value="Select a features" type="button" @click=${this.measureFeaturesClick} />
+                <button class="accent-button" value="Select a features" type="button" @click=${this.measureFeaturesClick}><p>SELECT A FEATURES</p></button>
             </div>
         `
+    }
+
+    createRenderRoot() {
+        return this;
     }
 }
 

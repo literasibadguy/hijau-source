@@ -45,11 +45,11 @@ export class CoordinatePanel extends LitElement {
     render() {
         return html`
             <div class="row-coordinates">
-                <form>
-                    <input type="text" placeholder="Latitude" @change=${this.changeLatitude}
+                <form class="form-coordinates">
+                    <input class="coord-input" type="text" placeholder="Latitude" @change=${this.changeLatitude}
                     />
-                    <input type="text" placeholder="Longitude" @change=${this.changeLongitude} />
-                    <button id="cord-button"  @click=${this.submittedCordinate}></button>
+                    <input class="coord-input" type="text" placeholder="Longitude" @change=${this.changeLongitude} />
+                    <button id="cord-button"  @click=${this.submittedCordinate}><p>CHECK LOCATION</p></button>
                 </form>
             </div>
         `

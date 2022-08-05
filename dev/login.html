@@ -6,7 +6,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Drawing Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Hijau Dashboard</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
     <script type="module" src="../node_modules/lit/directives/class-map.js"></script>
@@ -17,47 +18,31 @@
     <script type="module" src="../src/components/number-input.js"></script>
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/region.css" />
-    <link rel="stylesheet" href="styles/switch-toggle.css" />
-    <link rel="stylesheet" href="panels.css" />
+    <link rel="stylesheet" href="login.css" />
 
     <style>
         main {
             display: flex;
             height: 1000px;
-        }
-
-        #measurement {
-          position: absolute;
-          top: 10px;
-          right: 100px;
-          height: 30px;
-          background-color: brown;
-          color: #fff;
-          z-index: 100;
-          width: 40px;
+            flex: auto;
         }
 
     </style>
   </head>
   <body>
     <main>
-        <div id="panels-container" class="sidebar">
+        <form id="hijau-login-form" class="region">
             <div>
-            <h2>Enter Coordinates</h2>
-            <coordinate-panel></coordinate-panel>
+                <p>Email</p>
+                <input class="accent-input" id="email-login" type="email" required />
             </div>
-            <div class="region">
-              <measurement-panel></measurement-panel>
+            <div>
+                <p>Password</p>
+                <input class="accent-input" id="pass-login" type="password" required />
             </div>
-            <div id="toggles-container">
-              <h3>Testing Toogles</h3>
-              <switch-toggle name="Measurement" value="true"></switch-toggle>
-            </div>
-            <div class="region">
-              <h2>Testing Number Input</h2>
-              <number-input></number-input>
-            </div>
-        </div>
+            <button class="accent-button" id="submit-login" type="submit"><p>Log in</p></button>
+            <a href="/forgot-password.html">Forgot Password</a>
+        </form>
     </main>
   </body>
 </html> 

@@ -1,8 +1,7 @@
-import { startEditing } from "../../libs/editor-actions";
 import { DataEditorContainer } from "../Map/containers/data-editor-container";
-
 import '../Map/box-map';
 import { html } from "lit";
+import { startEditing } from "../../libs/dataeditor-actions";
 
 export class MapMaker extends DataEditorContainer {
 
@@ -52,8 +51,7 @@ export class MapMaker extends DataEditorContainer {
     }
 
     editLayer(layer) {
-        startEditing();
-        this.startEditing(layer);
+        startEditing(layer);
         console.log('Editing Layer', layer);
     }
 
@@ -69,6 +67,10 @@ export class MapMaker extends DataEditorContainer {
         } else {
             return true;
         }
+    }
+
+    onStateChanged({edits}) {
+        console.log("WHAT LIST OF MY LAYERS", edits);
     }
 
     render() {
@@ -91,19 +93,5 @@ export class MapMaker extends DataEditorContainer {
         return this;
     }
 }
-
-/*
-
-DISCONNECTED FROM THE INTERNET
-
-                <!-- <box-map
-                    id='map-interactive'
-                    stateId='mapbox-container'
-                    @map-onload=${initEditLayer}
-                >
-                    <h4>Tool Panels</h4>
-                    <!-- <layer-list-item></layer-list-item> -->
-                </box-map>
-*/
 
 customElements.define('map-maker', MapMaker);

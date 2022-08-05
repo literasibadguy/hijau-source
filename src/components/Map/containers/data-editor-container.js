@@ -1,4 +1,5 @@
 import { LitElement } from "lit";
+import { dataEditorStore } from "../../../libs/dataeditor-store";
 
 export class DataEditorContainer extends LitElement {
 
@@ -22,6 +23,17 @@ export class DataEditorContainer extends LitElement {
         this.redo = [];
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+        dataEditorStore.subscribe(this.onStateChanged);
+        this.onStateChanged(dataEditorStore.getState());
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        dataEditorStore.unsubscribe(this.onStateChanged);
+    }
+
     reset() {
         this.editing = false;
         this.originals = [];
@@ -43,4 +55,11 @@ export class DataEditorContainer extends LitElement {
         console.log(feature);
         console.log(edits);
     }
+
+    /**
+     * 
+     * @param {!Objct<string, *>} state 
+     */
+    // eslint-disable-next-line no-unused-vars
+    onStateChanged(state) {}
 }

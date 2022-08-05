@@ -1,0 +1,25 @@
+
+#hijau-login-form {
+    padding-left: 1rem;
+}
+
+#hijau-login-form * + * {
+    margin-top: 1rem;
+}
+
+.accent-input {
+    padding: 1rem;
+    font-size: 18px;
+    border-radius: 0.8rem;
+    border: 1px solid black;
+    margin-right: 0.8rem;
+    min-width: 300px;
+}
+
+.accent-button {
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 300px;
+}
