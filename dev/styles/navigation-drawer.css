@@ -11,7 +11,7 @@ navigation-drawer {
 
   }
 
-navigation-drawer > [data-drawer-container] {
+navigation-drawer > [data-drawer-container], navigation-drawer > [layerdesign-drawer-container] {
         box-shadow: 2px 0 12px rgb(0 0 0 / 40%);
         position: relative;
         transform: translateX(-110%);
@@ -56,6 +56,19 @@ navigation-drawer > [data-drawer-container] {
     transition: transform 200ms linear;
   }
   
+  navigation-drawer[open] > [layerdesign-drawer-container] {
+    transform: none;
+  }
+  
+  navigation-drawer[animating] > [layerdesign-drawer-container] {
+    transition: transform 200ms linear;
+  }
+  
+  navigation-drawer[open][animating] > [layerdesign-drawer-container] {
+    transition: transform 200ms linear;
+  }
+
+
   navigation-drawer > * {
     display: flex;
     flex-direction: column;

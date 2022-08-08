@@ -28,8 +28,15 @@ export default class LayerListItem extends LitElement {
     }
 
     editLayer() {
-
         this.dispatchEvent(new CustomEvent('need-edit-layer', {
+            bubbles: true,
+            composed: true,
+            detail: { editItem: this.itemLayer }
+        }))
+    }
+
+    showLayerDesigner() {
+        this.dispatchEvent(new CustomEvent('need-show-design', {
             bubbles: true,
             composed: true,
             detail: { editItem: this.itemLayer }
@@ -38,6 +45,14 @@ export default class LayerListItem extends LitElement {
 
     toggleVisibility() {
         this.dispatchEvent(new CustomEvent('need-visible', {
+            bubbles: true,
+            composed: true,
+            detail: { editItem: this.itemLayer }
+        }))
+    }
+
+    removeLayer() {
+        this.dispatchEvent(new CustomEvent('need-remove-layer', {
             bubbles: true,
             composed: true,
             detail: { editItem: this.itemLayer }
@@ -55,6 +70,8 @@ export default class LayerListItem extends LitElement {
                      name="Visibility"
                       value="visible"
                        @switch-change=${this.toggleVisibility}></switch-toggle>
+                    <button @click=${this.removeLayer}>Remove</button>
+                    <button data-open-drawer-button @click=${this.showLayerDesigner}>Show / Hide</button>
                 </div>
             </div>
         `

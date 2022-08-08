@@ -12,7 +12,17 @@ export const initialState = {
     editingLayer: false
 }
 
+export const tempMakerState = {
+    showMapLayerDesigner: false,
+    canSave: true,
+    editLayerLoaded: false,
+    saved: false,
+    activeTab: 'overlays'
+}
+
 // eslint-disable-next-line no-undef
 let mapMakerStore = devtools(createStore(initialState));
 
-export {mapMakerStore};
+let tempMakerStore = devtools(createStore(tempMakerState));
+
+export {mapMakerStore, tempMakerStore};

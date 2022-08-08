@@ -11,7 +11,7 @@ export default class MapToolPanel extends LitElement {
     render() {
         return html`
         <div id="map-tool-panel">
-        <div id="map-tool-button">
+        <!-- <div id="map-tool-button">
             <button @click=${openNavigationDrawer} data-open-drawer-button class="w-button--svg w-button--round" aria-label="Map Tools">
                 <img src="icons/tools.svg" />
             </button>
@@ -22,7 +22,7 @@ export default class MapToolPanel extends LitElement {
 
                 </coordinate-panel>
             </div>
-        </navigation-drawer>
+        </navigation-drawer> -->
         </div>
         `;
     }

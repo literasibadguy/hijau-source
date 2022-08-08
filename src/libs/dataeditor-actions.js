@@ -5,6 +5,8 @@ import { dataEditorStore } from "./dataeditor-store";
 
 export const startEditing = dataEditorStore.action((state, layer) => {
     state.setState({ editing: true, editingLayer: layer });
+
+    return { editing: true, editingLayer: layer }
 })
 
 export const createFeature = 
@@ -21,9 +23,12 @@ export const createFeature =
         const edits = state.getState().edits;
         edits.push(created);
         state.setState({ edits, selectedEditFeature: created })
+
+        return {edits, selectedEditFeature: created }
     })
 
 export const updateFeatures = dataEditorStore.action((state, features) => {
+    let ddEdit
     features.forEach(feature => {
         console.log('Updating feature: ' + feature.id);
 
@@ -32,10 +37,14 @@ export const updateFeatures = dataEditorStore.action((state, features) => {
             geojson: JSON.parse(JSON.stringify(feature))
         }
 
+        ddEdit = edit;
+
         if (state.getState().selectedEditFeature) {
             state.setState({selectedEditFeature: edit})
         }
     })
+
+    return { selectedEditFeature: ddEdit }
 })
 
 /**

@@ -3,15 +3,20 @@ import '../Map/box-map';
 import { html } from "lit";
 import { startEditing } from "../../libs/dataeditor-actions";
 
+import '../navigation-drawer';
+import '../LayerDesigner/map-layer-designer';
+
 export class MapMaker extends DataEditorContainer {
 
     static get properties() {
         return {
             edit: { type: Boolean },
+            mapLayers: { type: Array },
             popularLayers: { type: Array },
             showVisibility: { type: Boolean, reflect: true },
-            mapLayers: { type: Array },
             activeTab: { type: String, state: true },
+            showMapLayerDesigner: { type: String, state: true },
+            editLayer: { type: Object },
         }
     }
 
@@ -19,10 +24,14 @@ export class MapMaker extends DataEditorContainer {
         super();
 
         this.edit = false;
+
+        this.mapLayers = [];
         this.popularLayers = [];
         this.showVisibility = true;
         this.mapLayers = [];
         this.settings = {};
+        this.editLayer = {};
+        this.showMapLayerDesigner = true;
         
 
         // State
@@ -50,14 +59,14 @@ export class MapMaker extends DataEditorContainer {
         console.log('WHAT COORDINATE PANEL DO', e);
     }
 
-    editLayer(layer) {
+    _editLayer(layer) {
         startEditing(layer);
         console.log('Editing Layer', layer);
     }
 
     _initEditLayer(e) {
         console.log('MAP IS LOADED ITS TIME TO LOADED', e);
-        this.editLayer(e.detail.layer);
+        this._editLayer(e.detail.layer);
     }
 
     addLayer(layer) {
@@ -69,12 +78,16 @@ export class MapMaker extends DataEditorContainer {
         }
     }
 
-    onStateChanged({edits}) {
+    onStateChanged({edits, selectedEditFeature}) {
         console.log("WHAT LIST OF MY LAYERS", edits);
+
+        this.mapLayers = edits;
+        this.editLayer = selectedEditFeature;
     }
 
     render() {
-            
+        // const { showMapLayerDesigner } = this;
+        
         return html`
             <div>
                  <box-map

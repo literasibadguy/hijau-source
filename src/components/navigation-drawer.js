@@ -3,6 +3,7 @@
 import 'wicg-inert';
 import {closeNavigationDrawer} from '../libs/view-actions';
 import { ViewStateElement } from './view-state-element';
+import { tempMakerStore } from '../libs/mapmaker-store';
 
 export const NAVIGATION_DRAWER_TYPE = {
   standard: 'standard',
@@ -13,6 +14,7 @@ export class NavigationDrawer extends ViewStateElement  {
   static get properties() {
     return {
       type: {type: String, reflect: true},
+      body: { type: String, },
       open: {type: Boolean, reflect: true},
       animating: {type: Boolean, reflect: true},
     };
@@ -43,6 +45,7 @@ export class NavigationDrawer extends ViewStateElement  {
     this.type = null;
     this._open = false;
     this.animating = false;
+    this.body = '[data-drawer-container]';
 
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
@@ -62,12 +65,19 @@ export class NavigationDrawer extends ViewStateElement  {
 
     this.addEventListeners();
     super.connectedCallback();
+
   }
 
   addEventListeners() {
     this.drawerContainer.addEventListener('click', this.onBlockClicks);
     // this.closeBtn.addEventListener('click', closeNavigationDrawer);
     this.addEventListener('click', closeNavigationDrawer);
+  }
+
+  onMakerStateChanged() {
+    const state = tempMakerStore.getState();
+
+    this.open = state.getState().showMapLayerDesigner;
   }
 
   onStateChanged({isNavigationDrawerOpen, currentUrl}) {

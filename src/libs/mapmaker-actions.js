@@ -1,12 +1,18 @@
 
-import { mapMakerStore, initialState  } from "./mapmaker-store";
+import { mapMakerStore, initialState, tempMakerStore } from "./mapmaker-store";
 import MapStyles from '../components/Map/styles/index';
 
 export const reset = mapMakerStore.action(() => {
     return initialState;
 });
 
-export const setMapLayers = mapMakerStore.action((mapLayers, update = true) => {
+export const toggleMapLayerDesigner = tempMakerStore.action((state) => {
+
+    state.setState({showMapLayerDesigner: true });
+    return { showMapLayerDesigner: true }
+})
+
+export const setMapLayers = mapMakerStore.action((state, mapLayers, update = true) => {
     if (update) {
         this.updateMap(mapLayers);
     } else {
@@ -15,8 +21,13 @@ export const setMapLayers = mapMakerStore.action((mapLayers, update = true) => {
 
     return { mapLayers: mapLayers };
 })
+
+export const removeFromMap = mapMakerStore.action((state, layer) => {
+    const layers = state.getState().mapLayers.filter(evLayer => evLayer.layer_id != layer.layer_id);
+    updateMap(layers);
+})
   
-export const updateMap = mapMakerStore.action((mapLayers, rebuild = true) => {
+export const updateMap = mapMakerStore.action((state, mapLayers, rebuild = true) => {
     mapLayers = JSON.parse(JSON.stringify(mapLayers));
     let mapStyle
     if (rebuild) {
