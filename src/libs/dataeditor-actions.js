@@ -92,7 +92,7 @@ export const selectFeature = dataEditorStore.action((state, mhid) => {
 })
 
 export const deleteFeature = dataEditorStore.action((state, feature) => {
-    console.log(feature);
+    console.log('DELETING FEATURE', feature);
 
     const edit = {
         status: 'delete',

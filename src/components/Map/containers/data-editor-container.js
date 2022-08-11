@@ -50,12 +50,6 @@ export class DataEditorContainer extends LitElement {
         
     }
 
-    createFeature(feature) {
-        const edits = JSON.parse(JSON.stringify(this.edits));
-        console.log(feature);
-        console.log(edits);
-    }
-
     /**
      * 
      * @param {!Objct<string, *>} state 
