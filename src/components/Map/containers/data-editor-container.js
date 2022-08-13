@@ -50,6 +50,17 @@ export class DataEditorContainer extends LitElement {
         
     }
 
+    getUniqueFeatureIds() {
+        const uniqueIds = []
+        this.edits.forEach((edit) => {
+            const id = edit.geojson.id;
+            if (id && !uniqueIds.includes(id)) {
+                uniqueIds.push(id)
+            }
+        })
+        return uniqueIds
+    }
+
     /**
      * 
      * @param {!Objct<string, *>} state 

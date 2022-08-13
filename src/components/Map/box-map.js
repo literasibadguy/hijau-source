@@ -151,7 +151,7 @@ export default class BoxMap extends BaseMapContainer {
                 'layout': {},
                 'paint': {
                 'fill-color': '#f08',
-                'fill-opacity': 0.4
+                'fill-opacity': 1
                 },
                 // This is the important part of this example: the addLayer
                 // method takes 2 arguments: the layer as an object, and a string

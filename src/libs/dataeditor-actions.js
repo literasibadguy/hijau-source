@@ -75,6 +75,54 @@ function getLastEditForID(id, edits) {
     }
 } 
 
+export const saveEdits = dataEditorStore.action((state, _csrf, cb) => {
+    console.log('SAVING EDITS');
+    console.log(state.getState().edits);
+    const editsToSave = []
+    const featureIds = getUniqueFeatureIds();
+    featureIds.forEach(id => {
+        console.log(id);
+        const featureEdits = getAllEditsForFeatureId(id)
+        const lastFeatureEdit = featureEdits[featureEdits.length - 1]
+        if (featureEdits.length > 1) {
+            if (featureEdits[0].status === 'create') {
+                lastFeatureEdit.status = 'create'
+            }
+        }
+        editsToSave.push(lastFeatureEdit)
+        // editsToSave.push(lastFeatureEdit);
+    })
+    const layer_id = (state.getState().editingLayer && state.getState().editingLayer.layer_id) ? state.getState().editingLayer.layer_id : 0
+    if (editsToSave.length > 0) {
+        console.log('EDITS TO SAVE', {layer_id, edits: editsToSave, _csrf});
+        cb();
+    } else {
+        console.error('NO PENDING EDITS FOUND');
+    }
+})
+
+
+const getUniqueFeatureIds = dataEditorStore.action((state) => {
+    const uniqueIds = [];
+    state.getState().edits.forEach(edit => {
+        const id = edit.geojson.id
+        if (id && !uniqueIds.includes(id)) {
+            uniqueIds.push(id)
+        }
+    })
+    return uniqueIds
+});
+
+const getAllEditsForFeatureId = dataEditorStore.action((state, id) => {
+    const featureEdits = []
+    state.getState().edits.forEach(edit => {
+        if (edit.geojson.id === id) {
+            featureEdits.push(edit)
+        }
+    })
+    return featureEdits;
+})
+
 
 export const selectFeature = dataEditorStore.action((state, mhid) => {
     const selected = getLastEditForID(mhid, state.getState().edits);
