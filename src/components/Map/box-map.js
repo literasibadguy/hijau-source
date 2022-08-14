@@ -8,6 +8,7 @@ import  "mapbox-gl";
 import { html } from "lit";
 
 import './map-tool-panel';
+import { dataEditorStore } from "../../libs/dataeditor-store";
 
 export default class BoxMap extends BaseMapContainer {
     static get properties() {
@@ -21,11 +22,7 @@ export default class BoxMap extends BaseMapContainer {
             interactionBufferSize: { type: Number },
             fitBounds: { type: Array },
             fitBoundsOptions: { type: Object },
-            containers: {
-                baseMapState: { type: Object },
-                dataEditorState: { type: Object },
-                mapState: { type: Object }
-            },
+            dataEditorState: { type: Object, state: true },
             showMapTools: { type: Boolean },
             selectedFeature: { type: Object, state: true },
             selected: { type: Boolean, state: true },
@@ -73,6 +70,9 @@ export default class BoxMap extends BaseMapContainer {
         this.containers.mapState = this;
         console.log(this.containers.mapState);
 
+        dataEditorStore.subscribe(this.containerStateChanged);
+        this.containerStateChanged();
+
         this.loadMap();
     }
 
@@ -80,6 +80,7 @@ export default class BoxMap extends BaseMapContainer {
         if (this.mapBox) {
             this.mapBox.remove();
         }
+        dataEditorStore.unsubscribe(this.containerStateChanged);
         super.disconnectedCallback();
     }
 
@@ -96,6 +97,13 @@ export default class BoxMap extends BaseMapContainer {
         
     }
 
+
+    containerStateChanged() {
+        const editorState = dataEditorStore.getState();
+        this.dataEditorState = editorState.getState();
+
+        console.log('IS THERE ANY DATA EDITOR STATE', this.dataEditorState);
+    }
 
     loadMap() {
         // eslint-disable-next-line no-undef

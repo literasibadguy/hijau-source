@@ -5,7 +5,7 @@ import { startEditing } from "../../libs/dataeditor-actions";
 
 import '../navigation-drawer';
 import '../LayerDesigner/map-layer-designer';
-import '../'
+import './editor-tool-button';
 
 export class MapMaker extends DataEditorContainer {
 
@@ -97,7 +97,6 @@ export class MapMaker extends DataEditorContainer {
                     @map-onload=${this._initEditLayer}
                 >
                     <h4>Tool Panels</h4>
-                    <!-- <layer-list-item></layer-list-item> -->
                         <editor-tool-button></editor-tool-button>
                     </box-map>
             </div>

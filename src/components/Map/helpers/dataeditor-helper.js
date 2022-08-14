@@ -26,7 +26,7 @@ export default {
 
         // eslint-disable-next-line no-undef
         const draw = new MapboxDraw({
-            // displayControlsDefault: false,
+            displayControlsDefault: false,
             controls: {
                 point: layer.type === 'point',
                 polygon: layer.type === 'fill',

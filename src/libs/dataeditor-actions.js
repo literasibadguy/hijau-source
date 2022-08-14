@@ -92,7 +92,7 @@ export const saveEdits = dataEditorStore.action((state, _csrf, cb) => {
         editsToSave.push(lastFeatureEdit)
         // editsToSave.push(lastFeatureEdit);
     })
-    const layer_id = (state.getState().editingLayer && state.getState().editingLayer.layer_id) ? state.getState().editingLayer.layer_id : 0
+    const layer_id = (state.getState().editingLayer && state.getState().editingLayer.id) ? state.getState().editingLayer.id : 0
     if (editsToSave.length > 0) {
         console.log('EDITS TO SAVE', {layer_id, edits: editsToSave, _csrf});
         cb();

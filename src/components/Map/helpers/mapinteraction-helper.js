@@ -1,4 +1,3 @@
-import { dataEditorStore } from "../../../libs/dataeditor-store";
 import { debounce } from "../../../utils/debounce";
 import MapStyles from "../styles";
 
@@ -59,8 +58,10 @@ export default {
                         console.log('SELECTED FEATURE', feature);
                     }
 
-                    if (dataEditorStore.getState().getState().editing) {
-                        this.editFeature(feature);
+                    if (this.dataEditorState.editing) {
+                        if (feature.properties.id && this.dataEditorState.id === feature.properties.id) {
+                            this.editFeature(feature);
+                        }
                     }
                 }
                 
