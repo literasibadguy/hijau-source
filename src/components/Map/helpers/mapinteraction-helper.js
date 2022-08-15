@@ -2,6 +2,10 @@ import { debounce } from "../../../utils/debounce";
 import MapStyles from "../styles";
 
 export default {
+    setSelectionFilter(features) {
+        // ADDING GL STYLE
+        console.log(features);
+    },
     clearSelection() {
         this.selected = false;
         this.selectedFeature = undefined;
@@ -62,7 +66,11 @@ export default {
                         if (feature.properties.id && this.dataEditorState.id === feature.properties.id) {
                             this.editFeature(feature);
                         }
+                        return
                     }
+
+                    this.selectedFeature = feature;
+                    this.selected = true;
                 }
                 
                 

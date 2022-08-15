@@ -20,8 +20,13 @@ export default {
     initGeoJSON(data) {
         if (this.mapBox) {
             if (data && data.features && Array.isArray(data.features) && data.features.length > 0) {
-                this.mapBox.addSource('hijau-geojson', {type: 'geojson', data})
+                this.mapBox.addSource('urban-areas', {type: 'geojson', data})
+                
+            } else {
+              console.debug('Empty/Missing GeoJSON Data')
             }
+        } else {
+          console.debug('Map not initialized');
         }
     },
 

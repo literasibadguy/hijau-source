@@ -17,6 +17,7 @@ export class MapMaker extends DataEditorContainer {
             showVisibility: { type: Boolean, reflect: true },
             activeTab: { type: String, state: true },
             showMapLayerDesigner: { type: String, state: true },
+            data: { type: Object, state: true },
             editLayer: { type: Object },
         }
     }
@@ -33,6 +34,7 @@ export class MapMaker extends DataEditorContainer {
         this.settings = {};
         this.editLayer = {};
         this.showMapLayerDesigner = true;
+        this.data = null;
         
 
         // State
@@ -46,7 +48,6 @@ export class MapMaker extends DataEditorContainer {
         super.connectedCallback();
 
         this.coordinatePanel = this.getRootNode().documentElement.querySelector('coordinate-panel');
-        
         this.coordinatePanel.addEventListener('cord-submit', this.listenCoordinatePanel);
     }
     
@@ -87,7 +88,7 @@ export class MapMaker extends DataEditorContainer {
     }
 
     render() {
-        // const { showMapLayerDesigner } = this;
+        const { data } = this;
         
         return html`
             <div>
@@ -95,6 +96,7 @@ export class MapMaker extends DataEditorContainer {
                     id='map-interactive'
                     stateId='mapbox-container'
                     @map-onload=${this._initEditLayer}
+                    dataSource=${data}
                 >
                     <h4>Tool Panels</h4>
                         <editor-tool-button></editor-tool-button>

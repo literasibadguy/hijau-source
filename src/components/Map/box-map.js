@@ -15,7 +15,7 @@ export default class BoxMap extends BaseMapContainer {
         return {
             className: {type: String},
             stateId: { type: String },
-            data: { type: Object },
+            dataSource: { type: Object },
             glStyle: { type: Object },
             showScale: { type: Boolean },
             navPosition: { type: String },
@@ -38,6 +38,7 @@ export default class BoxMap extends BaseMapContainer {
         this.interactive = true;
         this.overlayMapStyle = {};
         this.stateId = '';
+        this.dataSource = null;
         this.mapBox =  undefined;
         this.interactionBufferSize = 10;
         this.containers = {baseMapState: {}, dataEditorState: {}, mapState: {}};
@@ -50,6 +51,9 @@ export default class BoxMap extends BaseMapContainer {
         this.selected = false;
         this.selectedFeature = null;
         this.enableMeasurementTools = false;
+
+        this.fetchTempoSource = this.fetchTempoSource.bind(this);
+        this.loadMap = this.loadMap.bind(this);
 
         // EVENTS
         this._mouseMoveHandler = this._mouseMoveHandler.bind(this);
@@ -73,6 +77,7 @@ export default class BoxMap extends BaseMapContainer {
         dataEditorStore.subscribe(this.containerStateChanged);
         this.containerStateChanged();
 
+        this.fetchTempoSource();
         this.loadMap();
     }
 
@@ -97,12 +102,38 @@ export default class BoxMap extends BaseMapContainer {
         
     }
 
+    fetchTempoSource() {
+        const response = fetch('https://docs.mapbox.com/mapbox-gl-js/assets/ne_50m_urban_areas.geojson');
+
+        response.then((dataSources) => {
+            const dataJSON = dataSources.json();
+            dataJSON.then((dataFeatures) => {
+                this.dataSource = dataFeatures;
+                console.log('WHAT FETCH TEMPO DO', this.data);
+            })
+        }).catch((error) => {
+            console.log('FETCH TEMPO ERROR', error);
+        })
+    }
+
 
     containerStateChanged() {
         const editorState = dataEditorStore.getState();
         this.dataEditorState = editorState.getState();
 
         console.log('IS THERE ANY DATA EDITOR STATE', this.dataEditorState);
+    }
+
+    addMapData(map, glStyle, geoJSON, cb) {
+        const style = this.overlayMapStyle || glStyle;
+        if (style && style.sources) {
+            console.log('STYLE SOURCES');
+        } else if (geoJSON) {
+            this.initGeoJSON(geoJSON);
+            cb();
+        } else {
+            cb();
+        }
     }
 
     loadMap() {
@@ -146,11 +177,11 @@ export default class BoxMap extends BaseMapContainer {
                     }
                 }
 
+            this.requestUpdate();
+            console.log('IS THERE ANY DATA HERE', this.dataSource);
+
             // SAMPLE SOURCE
-            mapBox.addSource('urban-areas', {
-                'type': 'geojson',
-                'data': 'https://docs.mapbox.com/mapbox-gl-js/assets/ne_50m_urban_areas.geojson'
-                });
+            this.initGeoJSON(this.dataSource);
 
             sampleLayer = {
                 'id': 'urban-areas-fill',

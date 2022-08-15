@@ -41,7 +41,6 @@ export default class LayerList extends LitElement {
 
     onStateChanged()  {
         const state = dataEditorStore.getState();
-        console.log('IS IT LISTENING TO LAYERS LIST', state.getState().edits);
 
         this.layers = state.getState().edits;
         this.requestUpdate();

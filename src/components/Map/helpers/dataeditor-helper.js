@@ -15,10 +15,16 @@ export default {
      */
     async editFeature(editFeature) {
         console.log('DATA EDIT FEATURE', editFeature);
+        const feature = selectFeature(editFeature.properties.id)
+        if (this.draw) {
+            if (!this.draw.get(feature.id)) {
+                this.draw.add(feature)
+
+            }
+        }
     },
 
     startEditingTool(layer) {
-
         if (this.enableMeasurementTools) {
             console.log('MEASUREMENT TOOLS ARE ENABLED');
 
@@ -46,6 +52,9 @@ export default {
                 features.forEach(feature => {
                     console.log(feature);
                     createFeature(feature);
+                    this.dataSource.features.push(feature);
+                    const geojsonSource = this.mapBox.getSource('urban-areas');
+                    geojsonSource.setData(this.dataSource);
                 })
             }
         })
@@ -79,6 +88,11 @@ export default {
                 }
             }
         })
+    },
+
+    stopEditingTool() {
+        this.mapBox.removeControl(this.draw)
+        
     },
 
     updateEdits(e) {
